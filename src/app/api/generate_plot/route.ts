@@ -82,22 +82,25 @@ export async function POST(req: Request) {
         success: true, 
         comics: result.comics 
       });
-    } catch (parseError) {
+    } catch (error) {
+      // Properly type the error
+      const parseError = error as Error;
       console.error('Failed to parse OpenAI response:', content);
       return NextResponse.json({ 
         success: false, 
         error: "Invalid JSON response from OpenAI",
-        details: parseError.message,
+        details: parseError.message,  // Now TypeScript knows this is a string
         rawResponse: content
       }, { status: 500 });
     }
 
-  } catch (error: any) {
-    console.error('Error generating story:', error);
+  } catch (error) {
+    const serverError = error as Error;
+    console.error('Error generating story:', serverError);
     return NextResponse.json({ 
       success: false, 
-      error: error.message || "Failed to generate story",
-      details: error.toString()
+      error: serverError.message || "Failed to generate story",
+      details: serverError.toString()
     }, { status: 500 });
   }
 } 
