@@ -8,18 +8,9 @@ const openai = new OpenAI({
 
 const SYSTEM_PROMPT = `
 Create a 3-panel comic story about a girl's medical journey to meet her boyfriend at MIT. For each panel, provide:
-1. An image generation prompt that includes 'TNH, a Chinese-Burmese girl studying medicine' and ends with 'cute Chibi style'
-2. A caption that refers to the person as 'TNH'
+1. An image generation prompt that includes 'TNH, a Burmese girl studying medicine in China' and ends with 'cute Chibi style'
+2. A caption that refers to the person as 'TNH' and her boyfriend as 'NLH'
 
-Format the output as JSON with this structure:
-{
-    "comics": [
-        {
-            "prompt": "Image generation prompt here",
-            "caption": "Caption text here"
-        }
-    ]
-}
 `;
 
 export async function POST(req: Request) {

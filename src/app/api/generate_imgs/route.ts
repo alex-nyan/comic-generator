@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       {
         input: {
           prompt: prompt,
-          num_inference_steps: 8,
+          num_inference_steps: 4,
           model: "schnell"
         }
       }
