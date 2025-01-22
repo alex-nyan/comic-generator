@@ -13,7 +13,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [prompt, setPrompt] = useState(
-    "Tell a sweet love story about TNH, a medical student in Myanmar, and her journey to meet her boyfriend at MIT"
+    "Tell a sweet love story about TNH, a medical student from Myanmar, studying in Zhejiang, China, and her journey to meet her boyfriend at MIT"
   );
 
   const handleGenerate = async () => {
