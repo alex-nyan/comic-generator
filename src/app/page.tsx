@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
 
 interface ComicPanel {
   prompt: string;
@@ -65,112 +66,99 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-purple-50 dark:from-pink-950 dark:to-purple-950">
-      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <main className="flex flex-col items-center gap-8">
-          {/* Header */}
-          <div className="text-center space-y-4">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text">
-              TNH & MIT: A Love Story Comic
+    <div className="min-h-screen bg-gradient-to-b from-[#1a1a2e] to-[#16213e]">
+      {/* Navigation */}
+      <nav className="border-b border-white/10 bg-black/30 backdrop-blur-xl">
+        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+          <Link href="/" className="text-white/90 text-lg font-medium">
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">
+              Sundai
+            </span>
+          </Link>
+          <Link 
+            href="/history" 
+            className="px-6 py-2 bg-gradient-to-r from-blue-400/10 to-purple-400/10 
+                     text-white/80 text-sm font-medium rounded-full border border-white/10
+                     hover:border-white/20 transition-all duration-300 hover:scale-105"
+          >
+            View History ✨
+          </Link>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="max-w-5xl mx-auto px-4 py-12">
+        <div className="max-w-2xl mx-auto">
+          <header className="text-center mb-8">
+            <h1 className="text-3xl font-medium bg-gradient-to-r from-blue-400 to-purple-400 
+                         text-transparent bg-clip-text">
+              AI Image Generation
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              Generate a cute comic about their long-distance love journey
-            </p>
-          </div>
+            <p className="mt-2 text-white/60">Transform your imagination into reality ✨</p>
+          </header>
 
-          {/* Input Section */}
-          <div className="w-full max-w-2xl space-y-6">
-            <textarea
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              className="w-full p-4 rounded-2xl border-2 border-pink-200 dark:border-pink-800 
-                       bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm
-                       focus:ring-2 focus:ring-purple-300 dark:focus:ring-purple-700
-                       resize-none shadow-sm"
-              placeholder="Enter your story prompt here..."
-              rows={3}
-            />
-
-            {/* Story Guidelines */}
-            <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 shadow-sm">
-              <h2 className="font-semibold mb-4 text-pink-600 dark:text-pink-400">Story Guidelines</h2>
-              <ol className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
-                <li className="flex items-center gap-2">
-                  <span className="text-pink-500">♥</span>
-                  Features TNH, a dedicated medical student in Myanmar
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-pink-500">♥</span>
-                  Illustrations in adorable Chibi style
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-pink-500">♥</span>
-                  Chronicles her love story with her MIT boyfriend
-                </li>
-              </ol>
+          <form onSubmit={handleGenerate} 
+                className="space-y-6 bg-white/5 p-6 rounded-2xl border border-white/10 
+                         backdrop-blur-xl shadow-lg">
+            <div>
+              <textarea
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="Describe something magical..."
+                className="w-full h-32 px-4 py-3 bg-white/5 border border-white/10 rounded-xl
+                         text-white/80 placeholder-white/40 focus:outline-none 
+                         focus:border-blue-400/50 focus:ring-2 focus:ring-blue-400/20 
+                         transition-all duration-300 resize-none"
+              />
             </div>
 
-            {/* Generate Button */}
             <button
-              onClick={handleGenerate}
+              type="submit"
               disabled={loading || !prompt.trim()}
-              className="w-full py-3 px-6 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 
-                       text-white font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 
-                       transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed
-                       disabled:hover:transform-none"
+              className="w-full py-3 bg-gradient-to-r from-blue-400 to-purple-400 
+                       text-white font-medium rounded-xl hover:opacity-90 
+                       transition-all duration-300 disabled:opacity-50 
+                       disabled:cursor-not-allowed hover:scale-[1.02]"
             >
-              {loading ? "Creating Your Love Story..." : "Generate Love Story Comic"}
+              {loading ? 'Creating Magic... ✨' : 'Generate Image ✨'}
             </button>
-          </div>
+          </form>
 
-          {/* Status Messages */}
           {error && (
-            <div className="text-red-500 bg-red-50 dark:bg-red-900/30 rounded-lg p-4 w-full max-w-2xl">
-              Error: {error}
+            <div className="mt-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+              <p className="text-red-400 text-sm">✨ Oops! {error}</p>
             </div>
           )}
 
           {loading && (
-            <div className="text-purple-600 dark:text-purple-400 animate-pulse text-center">
-              Crafting your romantic comic story...
+            <div className="mt-12 flex flex-col items-center">
+              <div className="w-8 h-8 border-4 border-blue-400/20 border-t-purple-400 
+                            rounded-full animate-spin"></div>
+              <p className="mt-4 text-white/60 text-sm animate-pulse">
+                Creating something magical... ✨
+              </p>
             </div>
           )}
 
-          {/* Comic Panels */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full max-w-6xl mt-8">
-            {panels.map((panel, index) => (
-              <div 
-                key={index} 
-                className="flex flex-col items-center gap-4 bg-white/80 dark:bg-gray-800/80 
-                         backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl 
-                         transition-shadow duration-200"
-              >
-                <div className="relative w-full aspect-square rounded-lg overflow-hidden">
-                  {panel.imageUrl && (
-                    <Image
-                      src={panel.imageUrl}
-                      alt={`Panel ${index + 1}`}
-                      fill
-                      className="object-cover"
-                      onError={() => {
-                        setError(`Failed to load image for panel ${index + 1}`);
-                      }}
-                    />
-                  )}
-                </div>
-                <p className="text-center text-sm italic text-gray-600 dark:text-gray-300">
-                  {panel.caption}
-                </p>
+          {panels.length > 0 && !loading && (
+            <div className="mt-12">
+              <div className="relative aspect-square rounded-xl overflow-hidden 
+                            bg-white/5 border border-white/10">
+                <Image
+                  src={panels[0].imageUrl || ""}
+                  alt={prompt}
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
-            ))}
-          </div>
-        </main>
-
-        {/* Footer */}
-        <footer className="mt-16 text-center text-sm text-gray-500 dark:text-gray-400">
-          <p>Creating love stories, one panel at a time 💕</p>
-        </footer>
-      </div>
+              <p className="mt-4 text-sm text-white/60 text-center">
+                ✨ Your magical creation is ready ✨
+              </p>
+            </div>
+          )}
+        </div>
+      </main>
     </div>
   );
 }
